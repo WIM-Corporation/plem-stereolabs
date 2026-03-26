@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+
+    <!-- Stereolabs ZED X Mini - Eye-on-Hand camera macro -->
+    <!-- Physical: 94x32x37mm, 150g, baseline 50mm, IP67 -->
+    <!-- Working range: 100mm-8m (2.2mm lens) -->
+    <!-- Interface: GMSL2 via ZED Link Duo -->
+
+    <xacro:macro name="stereolabs_zedxm" params="prefix parent_link mount_config_file">
+
+        <!-- Load mount transform from YAML (Hand-Eye calibration, project-specific) -->
+        <xacro:property name="cam_mount"
+            value="${xacro.load_yaml(mount_config_file)['camera_mount']}"/>
+
+        <!-- Half-baseline: left/right eye offset from camera body center -->
+        <xacro:property name="baseline_half" value="0.025"/>
+
+        <!-- Camera housing link -->
+        <!-- zedx_link frame = camera body center (mount reference point) -->
+        <!-- Collision: conservative box around housing -->
+        <link name="${prefix}zedx_link">
+            <inertial>
+                <origin xyz="0 0 -0.030" rpy="0 0 0"/>
+                <mass value="0.150"/>
+                <inertia ixx="3.0e-05" ixy="0" ixz="0"
+                         iyy="1.3e-04" iyz="0" izz="1.2e-04"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 0 -0.016" rpy="${radians(-90)} ${radians(-90)} ${radians(-90)}"/>
+                <geometry>
+                    <mesh filename="package://stereolabs_description/meshes/zedxm/zedxm.stl"/>
+                </geometry>
+                <material name="zedx_dark">
+                    <color rgba="0.25 0.25 0.25 1.0"/>
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 -0.030" rpy="0 0 0"/>
+                <geometry>
+                    <box size="0.098 0.036 0.041"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Left eye optical center (hand-eye calibration reference, depth origin) -->
+        <link name="${prefix}zedx_left_optical_frame"/>
+
+        <!-- Depth optical frame (ROS convention: z-forward, x-right, y-down) -->
+        <link name="${prefix}zedx_depth_optical_frame"/>
+
+        <!-- Mount joint: parent_link -> camera body center -->
+        <!-- Transform from Hand-Eye calibration YAML -->
+        <joint name="${prefix}zedx_mount_joint" type="fixed">
+            <origin xyz="${cam_mount['x']} ${cam_mount['y']} ${cam_mount['z']}"
+                    rpy="${cam_mount['roll']} ${cam_mount['pitch']} ${cam_mount['yaw']}"/>
+            <parent link="${parent_link}"/>
+            <child link="${prefix}zedx_link"/>
+        </joint>
+
+        <!-- Camera body center -> left eye (-baseline/2 in y) -->
+        <joint name="${prefix}zedx_left_eye_joint" type="fixed">
+            <origin xyz="0 -${baseline_half} 0" rpy="0 0 0"/>
+            <parent link="${prefix}zedx_link"/>
+            <child link="${prefix}zedx_left_optical_frame"/>
+        </joint>
+
+        <!-- Left eye -> depth optical frame (camera body -> ROS optical axes) -->
+        <joint name="${prefix}zedx_optical_joint" type="fixed">
+            <origin xyz="0 0 0" rpy="${radians(-90)} 0 ${radians(-90)}"/>
+            <parent link="${prefix}zedx_left_optical_frame"/>
+            <child link="${prefix}zedx_depth_optical_frame"/>
+        </joint>
+
+    </xacro:macro>
+
+</robot>
