@@ -23,7 +23,7 @@ The ZED X Mini is a stereo depth camera with a 50 mm baseline, working range of 
 ```bash
 # Clone into workspace
 cd ~/ros2_ws/src
-git clone <repo-url> stereolabs_description
+git clone https://github.com/WIM-Corporation/plem-stereolabs.git
 
 # Build
 cd ~/ros2_ws
