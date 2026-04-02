@@ -35,7 +35,7 @@ Tier 3 통합 xacro/SRDF는 `plem-neuromeka/neuromeka_integrations`에서 관리
 
 ## 공통 규칙 참조
 
-URDF 스펙은 wim_control Rule 13(urdf-standards)을 따른다.
-3-Tier 패턴 상세는 wim_control Rule 15(description-conventions)을 따른다.
+URDF 스펙은 `plem-msgs/.claude/rules/urdf-srdf-standards.md`를 따른다.
+3-Tier 패턴 상세는 `plem-msgs/.claude/rules/description-conventions.md`를 따른다.
 
 이 저장소 고유 규칙은 `.claude/rules/` 참조.

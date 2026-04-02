@@ -53,7 +53,7 @@ meshes/{model}/
 ## 버전 관리
 
 - SemVer를 따른다. 새 모델 추가: patch 범프. 매크로 인터페이스 변경: minor 범프.
-- URDF 스펙 상세는 wim_control Rule 13(urdf-standards)을 따른다.
+- URDF 스펙 상세는 `plem-msgs/.claude/rules/urdf-srdf-standards.md`를 따른다.
 
 ## 패키지 구조 (최소 구성)
 
@@ -81,7 +81,7 @@ ament_package()
   <name>stereolabs_description</name>
   <version>0.1.0</version>
   <description>Stereolabs ZED camera URDF and meshes</description>
-  <maintainer email="dev@wimcorp.kr">WIM Corporation</maintainer>
+  <maintainer email="wim@wimcorp.co.kr">WIM Corporation</maintainer>
   <license>Proprietary</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
