@@ -1,3 +1,8 @@
+---
+description: "Tier 2 description rules for Stereolabs peripherals — vendor-agnostic URDF, no plem/neuromeka dependencies, {vendor}_{model} macro naming"
+paths:
+  - "**/*_description/**"
+---
 # Description Tier 2 Rules — stereolabs_description
 
 스코프: 이 저장소 전체
