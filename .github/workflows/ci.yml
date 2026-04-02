@@ -13,26 +13,16 @@ jobs:
   build-and-test:
     runs-on: ubuntu-22.04
     container:
-      image: ros:humble-ros-base-jammy
+      image: ghcr.io/wim-corporation/ros-ci-humble:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           path: src/stereolabs_description
-
-      - name: Install dependencies
-        run: |
-          apt-get update
-          apt-get install -y \
-            python3-colcon-common-extensions \
-            python3-rosdep \
-            ros-humble-xacro
-
-      - name: Initialize rosdep
-        run: |
-          rosdep init || true
-          rosdep update
 
       - name: Install ROS dependencies
         run: |
@@ -53,11 +43,12 @@ jobs:
   xacro-standalone:
     runs-on: ubuntu-22.04
     container:
-      image: ros:humble-ros-base-jammy
+      image: ghcr.io/wim-corporation/ros-ci-humble:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-      - name: Install xacro
-        run: apt-get update && apt-get install -y ros-humble-xacro
       - name: Validate all xacro files standalone
         run: |
           . /opt/ros/$ROS_DISTRO/setup.sh
