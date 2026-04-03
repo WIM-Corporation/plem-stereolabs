@@ -15,9 +15,10 @@
         <!-- Half-baseline: left/right eye offset from camera body center -->
         <xacro:property name="baseline_half" value="0.025"/>
 
-        <!-- Optical center offset from body center (lens 10mm behind body center) -->
-        <!-- Value from zed-ros2-wrapper zed_macro.urdf.xacro for ZED X Mini -->
-        <xacro:property name="optical_offset_x" value="-0.01"/>
+        <!-- optical_offset_x not applied: plem body frame axes differ from
+             official zed-ros2-wrapper (mesh rpy(-90,-90,-90) correction),
+             so the official X offset value does not transfer directly.
+             Pre-v0.2.0 URDF operated correctly without it. -->
 
         <!-- IMU offset from body center (Camera-IMU Translation from ZED SDK calibration) -->
         <xacro:property name="imu_offset_y" value="-0.034502"/>
@@ -75,9 +76,9 @@
             <child link="${prefix}zedxm_link"/>
         </joint>
 
-        <!-- Camera body center -> left eye (+baseline/2 in y, ROS convention: left = +Y) -->
+        <!-- Camera body center -> left eye (-baseline/2 in y, plem body frame: left = -Y) -->
         <joint name="${prefix}zedxm_left_eye_joint" type="fixed">
-            <origin xyz="${optical_offset_x} ${baseline_half} 0" rpy="0 0 0"/>
+            <origin xyz="0 -${baseline_half} 0" rpy="0 0 0"/>
             <parent link="${prefix}zedxm_link"/>
             <child link="${prefix}zedxm_left_optical_frame"/>
         </joint>
@@ -89,9 +90,9 @@
             <child link="${prefix}zedxm_depth_optical_frame"/>
         </joint>
 
-        <!-- Camera body center -> right eye (-baseline/2 in y) -->
+        <!-- Camera body center -> right eye (+baseline/2 in y, plem body frame: right = +Y) -->
         <joint name="${prefix}zedxm_right_eye_joint" type="fixed">
-            <origin xyz="${optical_offset_x} -${baseline_half} 0" rpy="0 0 0"/>
+            <origin xyz="0 ${baseline_half} 0" rpy="0 0 0"/>
             <parent link="${prefix}zedxm_link"/>
             <child link="${prefix}zedxm_right_optical_frame"/>
         </joint>

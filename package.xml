@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="3">
   <name>stereolabs_description</name>
-  <version>0.2.0</version>
+  <version>0.2.1</version>
   <description>Stereolabs camera URDF descriptions and meshes</description>
   <maintainer email="wim@wimcorp.co.kr">WIM Corporation</maintainer>
   <license>Apache-2.0</license>

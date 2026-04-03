@@ -5,11 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.2.0] - 2026-04-03
+## [0.2.1] - 2026-04-03
 
 ### Fixed
-- **[BREAKING]** Left camera Y offset sign: `-baseline_half` → `+baseline_half` (ROS convention: left = +Y)
-- Added `optical_offset_x` (-0.01m) to left/right eye joints, aligning with official zed_macro.urdf.xacro
+- Reverted left/right eye Y offset sign to match plem body frame convention (left = -Y)
+  - plem body frame differs from official zed-ros2-wrapper due to mesh rpy(-90,-90,-90) correction
+  - RViz verification confirmed pre-v0.2.0 sign was correct
+- Removed `optical_offset_x` — not applicable under plem body frame axes
+- Reverted Tier 3 `zedxm_mount.yaml` to calibration raw values (x: 0.0626, y: 0.0019)
+- Fixed frame name references `zedx_` → `zedxm_` in README and rules documentation
+
+### Migration
+- Tier 3 `zedxm_mount.yaml` Y-value must be reverted to pre-v0.2.0 value: `y = left_eye - (-baseline_half)`
+- APRR `zed_tf_bridge` frame names still need `zedxm_*` update (from v0.2.0)
+
+## [0.2.0] - 2026-04-03
 
 ### Changed
 - **[BREAKING]** Frame name prefix `zedx_` → `zedxm_` to match camera model (ZED X Mini)
@@ -23,7 +33,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Migration
 - All frame references `zedx_*` must be updated to `zedxm_*` in downstream projects
-- Tier 3 `zedxm_mount.yaml` Y-value must be recalculated: `y_new = y_old - 2 × baseline_half`
 - APRR `zed_tf_bridge` rotation compensation and frame names need re-verification
 - Hand-Eye re-calibration recommended when hardware is accessible
 
