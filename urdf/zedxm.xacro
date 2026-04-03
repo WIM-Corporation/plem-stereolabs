@@ -15,10 +15,18 @@
         <!-- Half-baseline: left/right eye offset from camera body center -->
         <xacro:property name="baseline_half" value="0.025"/>
 
+        <!-- Optical center offset from body center (lens 10mm behind body center) -->
+        <!-- Value from zed-ros2-wrapper zed_macro.urdf.xacro for ZED X Mini -->
+        <xacro:property name="optical_offset_x" value="-0.01"/>
+
+        <!-- IMU offset from body center (Camera-IMU Translation from ZED SDK calibration) -->
+        <xacro:property name="imu_offset_y" value="-0.034502"/>
+        <xacro:property name="imu_offset_z" value="-0.004356"/>
+
         <!-- Camera housing link -->
-        <!-- zedx_link frame = camera body center (mount reference point) -->
+        <!-- zedxm_link frame = camera body center (mount reference point) -->
         <!-- Collision: conservative box around housing -->
-        <link name="${prefix}zedx_link">
+        <link name="${prefix}zedxm_link">
             <inertial>
                 <origin xyz="0 0 -0.030" rpy="0 0 0"/>
                 <mass value="0.150"/>
@@ -26,11 +34,12 @@
                          iyy="1.3e-04" iyz="0" izz="1.2e-04"/>
             </inertial>
             <visual>
+                <!-- STL exported in non-ROS axes; rpy corrects to x-forward, y-left, z-up -->
                 <origin xyz="0 0 -0.016" rpy="${radians(-90)} ${radians(-90)} ${radians(-90)}"/>
                 <geometry>
                     <mesh filename="package://stereolabs_description/meshes/zedxm/zedxm.stl"/>
                 </geometry>
-                <material name="zedx_dark">
+                <material name="zedxm_dark">
                     <color rgba="0.25 0.25 0.25 1.0"/>
                 </material>
             </visual>
@@ -43,32 +52,62 @@
         </link>
 
         <!-- Left eye optical center (hand-eye calibration reference, depth origin) -->
-        <link name="${prefix}zedx_left_optical_frame"/>
+        <link name="${prefix}zedxm_left_optical_frame"/>
 
-        <!-- Depth optical frame (ROS convention: z-forward, x-right, y-down) -->
-        <link name="${prefix}zedx_depth_optical_frame"/>
+        <!-- Left depth optical frame (ROS convention: z-forward, x-right, y-down) -->
+        <link name="${prefix}zedxm_depth_optical_frame"/>
+
+        <!-- Right eye optical center -->
+        <link name="${prefix}zedxm_right_optical_frame"/>
+
+        <!-- Right depth optical frame (ROS convention: z-forward, x-right, y-down) -->
+        <link name="${prefix}zedxm_right_depth_optical_frame"/>
+
+        <!-- IMU link -->
+        <link name="${prefix}zedxm_imu_link"/>
 
         <!-- Mount joint: parent_link -> camera body center -->
         <!-- Transform from Hand-Eye calibration YAML -->
-        <joint name="${prefix}zedx_mount_joint" type="fixed">
+        <joint name="${prefix}zedxm_mount_joint" type="fixed">
             <origin xyz="${cam_mount['x']} ${cam_mount['y']} ${cam_mount['z']}"
                     rpy="${cam_mount['roll']} ${cam_mount['pitch']} ${cam_mount['yaw']}"/>
             <parent link="${parent_link}"/>
-            <child link="${prefix}zedx_link"/>
+            <child link="${prefix}zedxm_link"/>
         </joint>
 
-        <!-- Camera body center -> left eye (-baseline/2 in y) -->
-        <joint name="${prefix}zedx_left_eye_joint" type="fixed">
-            <origin xyz="0 -${baseline_half} 0" rpy="0 0 0"/>
-            <parent link="${prefix}zedx_link"/>
-            <child link="${prefix}zedx_left_optical_frame"/>
+        <!-- Camera body center -> left eye (+baseline/2 in y, ROS convention: left = +Y) -->
+        <joint name="${prefix}zedxm_left_eye_joint" type="fixed">
+            <origin xyz="${optical_offset_x} ${baseline_half} 0" rpy="0 0 0"/>
+            <parent link="${prefix}zedxm_link"/>
+            <child link="${prefix}zedxm_left_optical_frame"/>
         </joint>
 
         <!-- Left eye -> depth optical frame (camera body -> ROS optical axes) -->
-        <joint name="${prefix}zedx_optical_joint" type="fixed">
+        <joint name="${prefix}zedxm_optical_joint" type="fixed">
             <origin xyz="0 0 0" rpy="${radians(-90)} 0 ${radians(-90)}"/>
-            <parent link="${prefix}zedx_left_optical_frame"/>
-            <child link="${prefix}zedx_depth_optical_frame"/>
+            <parent link="${prefix}zedxm_left_optical_frame"/>
+            <child link="${prefix}zedxm_depth_optical_frame"/>
+        </joint>
+
+        <!-- Camera body center -> right eye (-baseline/2 in y) -->
+        <joint name="${prefix}zedxm_right_eye_joint" type="fixed">
+            <origin xyz="${optical_offset_x} -${baseline_half} 0" rpy="0 0 0"/>
+            <parent link="${prefix}zedxm_link"/>
+            <child link="${prefix}zedxm_right_optical_frame"/>
+        </joint>
+
+        <!-- Right eye -> depth optical frame (camera body -> ROS optical axes) -->
+        <joint name="${prefix}zedxm_right_optical_joint" type="fixed">
+            <origin xyz="0 0 0" rpy="${radians(-90)} 0 ${radians(-90)}"/>
+            <parent link="${prefix}zedxm_right_optical_frame"/>
+            <child link="${prefix}zedxm_right_depth_optical_frame"/>
+        </joint>
+
+        <!-- Camera body center -> IMU -->
+        <joint name="${prefix}zedxm_imu_joint" type="fixed">
+            <origin xyz="0 ${imu_offset_y} ${imu_offset_z}" rpy="0 0 0"/>
+            <parent link="${prefix}zedxm_link"/>
+            <child link="${prefix}zedxm_imu_link"/>
         </joint>
 
     </xacro:macro>
