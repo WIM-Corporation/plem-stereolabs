@@ -1,9 +1,5 @@
 ---
-paths:
-  - "**/*zed*"
-  - "**/*camera*"
-  - "**/*depth*"
-  - "**/*stereo*"
+description: "ZED Camera ROS 2 — topics, services, parameters, TF alignment, Jetson build flags"
 ---
 
 # ZED Camera ROS 2 — 코딩 규칙

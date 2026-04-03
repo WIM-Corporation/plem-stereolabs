@@ -1,10 +1,5 @@
 ---
-description: "ZED camera usage guide — topic verification, RViz visualization, SVO recording/playback, Object Detection demo"
-paths:
-  - "**/*zed*"
-  - "**/*camera*"
-  - "**/*depth*"
-  - "**/*stereo*"
+description: "ZED camera usage — RViz verification, SVO recording/playback, Object Detection demo"
 ---
 
 # ZED Camera Usage Guide
