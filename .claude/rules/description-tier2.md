@@ -18,8 +18,8 @@ paths:
 
 ### 네이밍 규칙
 
-- 매크로 이름: `{vendor}_{model}` (예: `stereolabs_zed_x_mini`, `stereolabs_zed_2i`)
-- 파일명: `{model}.urdf.xacro` (예: `zed_x_mini.urdf.xacro`)
+- 매크로 이름: `{vendor}_{model}` (예: `stereolabs_zedxm`, `stereolabs_zed_2i`)
+- 파일명: `{model}.xacro` (예: `zedxm.xacro`)
 
 ### 필수 파라미터
 

@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - `stereolabs_description` ROS2 package with Stereolabs ZED camera URDF and mesh assets
-- Xacro macro-based composition: `stereolabs_zed_x_mini` with parameterized prefix support
+- Xacro macro-based composition: `stereolabs_zedxm` with parameterized prefix support
 - Visual (DAE) and collision (STL) mesh files for ZED X Mini camera
 - `mount_config_file` parameter support for flexible mounting configuration
 - CMakeLists.txt and package.xml with minimal dependencies (ROS2 Humble compatible)
