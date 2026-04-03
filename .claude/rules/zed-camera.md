@@ -216,6 +216,22 @@ front = GroupAction([
 | `svo.use_svo_timestamps` | `true` | |
 | `svo.replay_rate` | `1.0` | 0.1-5.0 |
 
+## TF 프레임 정합 (plem URDF ↔ 드라이버)
+
+카메라 URDF의 TF 프레임과 드라이버가 publish하는 TF 프레임이 일치해야 한다.
+ZED X Mini의 경우:
+- URDF 프레임: `{prefix}zedx_left_optical_frame`
+- 드라이버 프레임: zed-ros2-wrapper의 `camera_model` 파라미터에 따라 결정
+
+plem URDF와 함께 사용 시 드라이버의 TF publish를 비활성화하여 프레임 충돌을 방지한다:
+```yaml
+pos_tracking:
+  publish_tf: false
+  publish_map_tf: false
+```
+
+Hand-Eye 캘리브레이션 결과는 Tier 3 Integration 패키지에 저장된다 (예: `neuromeka_integrations/urdf/sensors/config/zedxm_mount.yaml`).
+
 ## Jetson 빌드
 
 colcon build 시 Jetson 전용 cmake 플래그 필수:
