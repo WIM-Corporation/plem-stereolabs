@@ -71,9 +71,9 @@ camera_mount:
 
 ### 생성되는 주요 프레임
 
-- `${prefix}zedx_link` -- 카메라 하우징 중심 (마운트 기준점)
-- `${prefix}zedx_left_optical_frame` -- 좌안 광학 중심 (Hand-Eye 캘리브레이션 기준)
-- `${prefix}zedx_depth_optical_frame` -- 뎁스 광학 프레임 (ROS 규약: z-전방, x-우측, y-하방)
+- `${prefix}zedxm_link` -- 카메라 하우징 중심 (마운트 기준점)
+- `${prefix}zedxm_left_optical_frame` -- 좌안 광학 중심 (Hand-Eye 캘리브레이션 기준)
+- `${prefix}zedxm_depth_optical_frame` -- 뎁스 광학 프레임 (ROS 규약: z-전방, x-우측, y-하방)
 
 ## 로봇 통합
 

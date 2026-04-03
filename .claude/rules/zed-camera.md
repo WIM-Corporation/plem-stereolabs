@@ -216,7 +216,7 @@ front = GroupAction([
 
 카메라 URDF의 TF 프레임과 드라이버가 publish하는 TF 프레임이 일치해야 한다.
 ZED X Mini의 경우:
-- URDF 프레임: `{prefix}zedx_left_optical_frame`
+- URDF 프레임: `{prefix}zedxm_left_optical_frame`
 - 드라이버 프레임: zed-ros2-wrapper의 `camera_model` 파라미터에 따라 결정
 
 plem URDF와 함께 사용 시 드라이버의 TF publish를 비활성화하여 프레임 충돌을 방지한다:

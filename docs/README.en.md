@@ -71,9 +71,9 @@ camera_mount:
 
 ### Key Frames Generated
 
-- `${prefix}zedx_link` -- Camera housing center (mount reference point)
-- `${prefix}zedx_left_optical_frame` -- Left eye optical center (Hand-Eye calibration reference)
-- `${prefix}zedx_depth_optical_frame` -- Depth optical frame (ROS convention: z-forward, x-right, y-down)
+- `${prefix}zedxm_link` -- Camera housing center (mount reference point)
+- `${prefix}zedxm_left_optical_frame` -- Left eye optical center (Hand-Eye calibration reference)
+- `${prefix}zedxm_depth_optical_frame` -- Depth optical frame (ROS convention: z-forward, x-right, y-down)
 
 ## Robot Integration
 
