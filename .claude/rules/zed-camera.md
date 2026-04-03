@@ -228,6 +228,33 @@ pos_tracking:
 
 Hand-Eye 캘리브레이션 결과는 Tier 3 Integration 패키지에 저장된다 (예: `neuromeka_integrations/urdf/sensors/config/zedxm_mount.yaml`).
 
+## Headless (SSH) 환경 주의
+
+> **SIGSEGV 크래시 위험**: SSH 등 headless 환경(`DISPLAY` 미설정)에서 NITROS가 EGL 초기화에 실패하여 카메라 열기 단계에서 SIGSEGV가 발생한다.
+
+증상:
+```
+nvbufsurftransform: Could not get EGL display connection
+(Argus) Error BadParameter: ...createBuffer()...
+exit code -11 (SIGSEGV)
+```
+
+해결 (택일):
+- `param_overrides:="debug.disable_nitros:=true"` 추가
+- `DISPLAY=:N`이 설정된 환경(로컬 또는 Xvfb)에서 실행
+
+## `param_overrides` Launch Argument
+
+CLI에서 YAML을 수정하지 않고 파라미터를 오버라이드하는 launch argument. 최고 우선순위.
+
+```bash
+# 세미콜론으로 복수 파라미터 전달
+ros2 launch zed_wrapper zed_camera.launch.py camera_model:=zedxm \
+    param_overrides:="object_detection.od_enabled:=true;debug.disable_nitros:=true"
+```
+
+> **주의**: `object_detection.od_enabled:=true`를 launch argument로 직접 전달하면 효과 없음. `zed_camera.launch.py`에 선언된 launch argument가 아니므로 ROS 2 launch가 경고 없이 무시한다. 반드시 `param_overrides`를 통해 전달할 것.
+
 ## Jetson 빌드
 
 colcon build 시 Jetson 전용 cmake 플래그 필수:

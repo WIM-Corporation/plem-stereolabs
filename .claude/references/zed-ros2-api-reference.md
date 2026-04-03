@@ -239,7 +239,7 @@ ros2 service call /zed/zed_node/set_pose zed_msgs/srv/SetPose \
 | 파라미터 | 타입 | 기본값 | 설명 |
 |----------|------|--------|------|
 | `depth.depth_mode` | string | `NEURAL_LIGHT` | 깊이 모드 (NONE/NEURAL_LIGHT/NEURAL/NEURAL_PLUS) |
-| `depth.depth_stabilization` | int | `-1` | 깊이 안정화 (-1=SDK 기본, 0-100) |
+| `depth.depth_stabilization` | int | `-1` | 깊이 안정화 (-1=SDK 기본, 0-100). **주의**: `> 0` 설정 시 positional tracking이 강제 활성화됨. plem URDF TF와 충돌할 수 있으므로 `0`으로 설정 권장 |
 | `depth.min_depth` | float | 카메라별 | 최소 깊이 (m) |
 | `depth.max_depth` | float | 카메라별 | 최대 깊이 (m) |
 | `depth.openni_depth_mode` | bool | `false` | false=32bit float(m), true=16bit uint(mm) |

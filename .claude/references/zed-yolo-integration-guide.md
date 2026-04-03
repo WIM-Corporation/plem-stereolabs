@@ -85,9 +85,11 @@ yolo export model=path/to/best.pt format=onnx simplify=True dynamic=False imgsz=
 
 SDK 내장 모델로 Object Detection을 바로 실행:
 
+> **주의**: `object_detection.od_enabled:=true`를 launch argument로 직접 전달하면 **효과 없음**. ROS 2 launch는 미선언 argument를 경고 없이 무시한다. 반드시 `param_overrides`를 사용할 것.
+
 ```bash
 ros2 launch zed_wrapper zed_camera.launch.py camera_model:=zedxm \
-    object_detection.od_enabled:=true
+    param_overrides:="object_detection.od_enabled:=true"
 ```
 
 내장 모델 목록:
@@ -174,10 +176,29 @@ ros2 launch zed_wrapper zed_camera.launch.py camera_model:=zedxm \
 ```bash
 # 탐지 결과 토픽 구독
 ros2 topic echo /zed/zed_node/obj_det/objects
+```
 
-# RViz에서 3D 바운딩 박스 시각화
-rviz2
-# ObjectsStamped 메시지 → MarkerArray로 변환하여 표시
+**RViz에서 3D 바운딩 박스 시각화:**
+
+`ObjectsStamped`는 RViz2 기본 display type이 아니다. 공식 `rviz-plugin-zed-od` 플러그인을 빌드하여 사용:
+
+```bash
+# 빌드 (zed-ros2-examples 저장소 필요)
+cd ~/zed_ws/src
+git clone --depth 1 https://github.com/stereolabs/zed-ros2-examples.git
+cd ~/zed_ws && colcon build --packages-select rviz_plugin_zed_od zed_display_rviz2
+
+# RViz만 시작 (ZED 노드는 이미 실행 중)
+ros2 launch zed_display_rviz2 display_zed_cam.launch.py \
+    camera_model:=zedxm start_zed_node:=False
+
+# 또는 ZED + RViz 한번에
+ros2 launch zed_display_rviz2 display_zed_cam.launch.py camera_model:=zedxm
+```
+
+**주의**: `zed_display_rviz2` launch는 `param_overrides`를 전달하지 않으므로, OD 활성화는 launch 후 서비스 호출 필요:
+```bash
+ros2 service call /zed/zed_node/enable_obj_det std_srvs/srv/SetBool "{data: true}"
 ```
 
 ### 4.3 런타임 제어
