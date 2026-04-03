@@ -82,7 +82,7 @@ ament_package()
   <version>0.1.0</version>
   <description>Stereolabs ZED camera URDF and meshes</description>
   <maintainer email="wim@wimcorp.co.kr">WIM Corporation</maintainer>
-  <license>Proprietary</license>
+  <license>Apache-2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
   <exec_depend>urdf</exec_depend>
