@@ -93,6 +93,10 @@ ros2 launch zed_wrapper zed_camera.launch.py camera_model:=zedxm \
 > **핵심**: `od_enabled:=true`를 launch arg로 직접 전달하면 효과 없음.
 > `zed_camera.launch.py`에 미선언된 arg이므로 ROS 2가 경고 없이 무시. 반드시 `param_overrides` 사용.
 
+## 성능 이슈 시
+
+CPU 과부하: `grab_compute_capping_fps`, `point_cloud_freq` 동적 조절. 해상도: `pub_downscale_factor: 2.0`. 상세: `zed-optimization.md`
+
 ## Lazy Publishing
 
 ZED는 구독자가 있을 때만 publish. 데이터 미수신 시 구독자 수 확인: `ros2 topic info <topic>`
