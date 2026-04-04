@@ -8,13 +8,13 @@
 
 `stereolabs_description` is a ROS 2 package providing URDF/xacro models and 3D meshes for Stereolabs ZED cameras.
 
-As a **Tier 2 (robot-vendor-independent)** package, it has no dependencies on any specific robot driver or platform. It can be referenced by any robot vendor such as Neuromeka, Doosan, etc.
+As a **Description Layer (robot-vendor-independent)** package, it has no dependencies on any specific robot driver or platform. It can be referenced by any robot vendor such as Neuromeka, Doosan, etc.
 
 ## Included Models
 
 | Model | Macro Name | Dimensions | Weight | Interface |
 |-------|-----------|------------|--------|-----------|
-| **ZED X Mini** | `stereolabs_zedxm` | 94 x 32 x 37 mm | 150 g | GMSL2 (ZED Link Duo) |
+| **ZED X Mini** | `zed_camera` (vendored official) | 94 x 32 x 37 mm | 150 g | GMSL2 (ZED Link Duo) |
 
 The ZED X Mini is a stereo depth camera with a 50 mm baseline, working range of 100 mm -- 8 m (2.2 mm lens), and IP67 rating.
 
@@ -44,7 +44,7 @@ xacro urdf/zedxm.xacro prefix:=cam_ parent_link:=tool0 mount_config_file:=/path/
 
 ```xml
 <xacro:include filename="$(find stereolabs_description)/urdf/zedxm.xacro"/>
-<xacro:stereolabs_zedxm prefix="cam_"
+<xacro:zed_camera prefix="cam_"
                          parent_link="tool0"
                          mount_config_file="$(find my_config)/config/camera_mount.yaml"/>
 ```
@@ -71,19 +71,19 @@ camera_mount:
 
 ### Key Frames Generated
 
-- `${prefix}zedxm_link` -- Camera housing center (mount reference point)
-- `${prefix}zedxm_left_optical_frame` -- Left eye optical center (Hand-Eye calibration reference)
-- `${prefix}zedxm_depth_optical_frame` -- Depth optical frame (ROS convention: z-forward, x-right, y-down)
+- `${name}_camera_link` -- Camera housing center (mount reference point)
+- `${name}_left_camera_frame_optical` -- Left eye optical center (Hand-Eye calibration reference)
+- `${name}_left_camera_frame_optical` -- Depth optical frame (ROS convention: z-forward, x-right, y-down)
 
 ## Robot Integration
 
-This package provides the camera model independently. Integration with a specific robot is handled by **Tier 3 integrations** packages (e.g., `neuromeka_integrations`).
+This package provides the camera model independently. Integration with a specific robot is handled by **Integration Layer** packages (e.g., `neuromeka_integrations`).
 
 Refer to the respective integrations package documentation for integration examples.
 
 ## Adding a New Model
 
-1. Create `urdf/{model}.xacro` -- the macro name must follow the `stereolabs_{model}` convention.
+1. Create `urdf/{model}.xacro` -- the macro name must follow the `zed_camera` convention.
 2. Place STL/DAE meshes under `meshes/{model}/`.
 3. Add an xacro parsing test to `test/test_xacro.py`.
 4. Bump the `package.xml` version (SemVer patch).

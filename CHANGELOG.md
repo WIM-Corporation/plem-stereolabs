@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.0.0] - 2026-04-04
+
+### Changed
+- **BREAKING**: Replaced custom `stereolabs_zedxm` macro with vendored official `zed_camera` macro from `zed-ros2-wrapper`
+- TF frame names now match official ZED ROS2 driver exactly (`{name}_camera_link`, `{name}_left_camera_frame_optical`, etc.)
+- Mesh directory flattened: `meshes/zedxm/zedxm.stl` → `meshes/zedxm.stl`
+- Package role changed from "custom URDF" to "vendored official URDF"
+
+### Added
+- `VENDOR_SOURCE.md` for source tracking and sync procedure
+- Support for all 13+ ZED camera models via official macro parameterization
+
+### Removed
+- Custom `stereolabs_zedxm` macro (`urdf/zedxm.xacro`)
+- Hardcoded IMU link (per-unit factory calibration; should not be in URDF)
+
+### Migration
+- Integration layer (`sensors/zedxm.xacro`) must use `zed_camera` macro instead of `stereolabs_zedxm`
+- Hand-Eye calibration YAML `z` value: subtract 0.016m (mount reference changed from body center to camera_link screw hole)
+- SRDF `sensor_collision` macro now requires `cam_name` parameter
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),

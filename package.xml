@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="3">
   <name>stereolabs_description</name>
-  <version>0.2.1</version>
-  <description>Stereolabs camera URDF descriptions and meshes</description>
+  <version>1.0.0</version>
+  <description>Vendored Stereolabs ZED camera URDF descriptions and meshes (from zed-ros2-wrapper)</description>
   <maintainer email="wim@wimcorp.co.kr">WIM Corporation</maintainer>
   <license>Apache-2.0</license>
   <buildtool_depend>ament_cmake</buildtool_depend>

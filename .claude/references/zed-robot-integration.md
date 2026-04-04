@@ -1,5 +1,5 @@
 ---
-description: "ZED robot integration — manipulator TF setup, URDF 3-Tier pattern, multi-camera, streaming bridge, diagnostics"
+description: "ZED robot integration — manipulator TF setup, URDF 2-Layer pattern, multi-camera, streaming bridge, diagnostics"
 ---
 
 # ZED Robot Integration
@@ -38,15 +38,15 @@ pos_tracking:
 TF: `map → odom → camera_link → base_link`
 Origin은 **반전**: `xyz="-0.12 0.0 -0.25"` (parent-child 역전 때문)
 
-## 2. URDF — plem 3-Tier 패턴
+## 2. URDF — plem 2-Layer 패턴
 
-| Tier | 패키지 | 역할 |
+| Layer | 패키지 | 역할 |
 |------|--------|------|
 | 1 | `neuromeka_description` | 로봇 본체 URDF |
 | 2 | `stereolabs_description` | ZED 카메라 URDF (이 패키지) |
 | 3 | `neuromeka_integrations` | 통합 xacro / SRDF |
 
-ZED URDF는 Tier 3 통합 xacro를 통해 포함.
+ZED URDF는 Integration Layer 통합 xacro를 통해 포함.
 Hand-Eye 캘리브레이션: `neuromeka_integrations/urdf/sensors/config/zedxm_mount.yaml`
 
 ZED wrapper 공식 xacro 매크로:
@@ -106,7 +106,7 @@ ros2 topic echo /diagnostics
 ## 체크리스트
 
 - [ ] `publish_tf: false`, `publish_map_tf: false` (fixed-base manipulator)
-- [ ] Tier 3 xacro에 ZED 매크로 포함 + mount joint 정의
+- [ ] Integration Layer xacro에 ZED 매크로 포함 + mount joint 정의
 - [ ] `zedxm_mount.yaml` Hand-Eye 캘리브레이션 반영
 - [ ] 다중 카메라 시 camera #1만 TF 발행
 - [ ] Streaming bridge: server/client 양쪽 NVIDIA GPU 확인

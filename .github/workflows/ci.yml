@@ -50,11 +50,18 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-      - name: Validate all xacro files standalone
+        with:
+          path: src/stereolabs_description
+      - name: Build package
         run: |
           . /opt/ros/$ROS_DISTRO/setup.sh
-          find . -name "*.urdf.xacro" | while read f; do
-            echo "Checking: $f"
-            xacro "$f" || exit 1
-            xacro "$f" prefix:=test_ || exit 1
-          done
+          colcon build --packages-select stereolabs_description
+      - name: Validate vendored macro
+        run: |
+          . /opt/ros/$ROS_DISTRO/setup.sh
+          . install/setup.sh
+          # Official vendored macro requires name + model params
+          xacro src/stereolabs_description/urdf/zed_macro.urdf.xacro name:=test_cam model:=zedxm
+          echo "PASS: zedxm"
+          xacro src/stereolabs_description/urdf/zed_macro.urdf.xacro name:=front_cam model:=zedxm
+          echo "PASS: multi-cam name"

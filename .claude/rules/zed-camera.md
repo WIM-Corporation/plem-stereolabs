@@ -58,7 +58,9 @@ ros2 launch zed_wrapper zed_camera.launch.py \
 
 ## TF 프레임 정합 (plem URDF 사용 시)
 
-- ZED X Mini URDF 프레임: `{prefix}zedxm_left_optical_frame`
+- 공식 벤더링 매크로 사용: 프레임명이 ZED 드라이버와 100% 일치
+- 카메라 이름 규칙: `{prefix}{robot_name}_cam` (예: `indy_cam`)
+- 주요 프레임: `{cam_name}_camera_link`, `{cam_name}_left_camera_frame_optical`
 - plem URDF와 함께 사용 시 드라이버 TF 비활성화 필수 (충돌 방지):
 
 ```yaml
