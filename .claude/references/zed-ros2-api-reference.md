@@ -1,11 +1,15 @@
+---
+description: "ZED ROS 2 API reference — complete topic/service/parameter/message specification for zed-ros2-wrapper"
+---
+
 # ZED ROS 2 API 레퍼런스
 
 > zed-ros2-wrapper가 제공하는 토픽, 서비스, 파라미터, 메시지 명세, 카메라 모델 전체 목록.
 > 소스: [zed-ros2-wrapper](https://github.com/stereolabs/zed-ros2-wrapper) C++ 소스코드 및 `config/*.yaml`
 >
-> 관련 문서: [설치·활용 가이드](zed-ros2-jetson-guide.md) | [YOLO 통합 가이드](zed-yolo-integration-guide.md)
+> 설치: plem-init 스킬 `zed-driver-setup.md` 참조 | 카메라 사용법: `zed-usage-guide.md` 참조 | YOLO 통합: `zed-yolo-integration.md` 참조
 
-이 문서는 zed-ros2-wrapper 노드가 실행 중인 환경을 전제합니다. 설치는 [메인 가이드](zed-ros2-jetson-guide.md) 참고.
+이 문서는 zed-ros2-wrapper 노드가 실행 중인 환경을 전제합니다. 설치는 `zed-driver-setup.md` 참고.
 
 ---
 

@@ -1,5 +1,5 @@
 ---
-description: "ZED + YOLO integration — ONNX config, detection_model values, class definition, output topics"
+description: "ZED + YOLO configuration reference — ONNX config structure, detection_model values, class_XXX block definition, output topics"
 ---
 
 # ZED + YOLO 통합 — 코딩 규칙

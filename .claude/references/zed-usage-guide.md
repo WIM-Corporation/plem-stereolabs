@@ -1,5 +1,5 @@
 ---
-description: "ZED camera usage — RViz verification, SVO recording/playback, Object Detection demo"
+description: "ZED camera usage reference — RViz verification, SVO recording/playback, Object Detection demo, param_overrides usage"
 ---
 
 # ZED Camera Usage Guide

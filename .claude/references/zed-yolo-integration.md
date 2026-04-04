@@ -1,11 +1,15 @@
+---
+description: "ZED + YOLO integration guide — ONNX export, custom model config, ROS 2 launch, 3D detection output"
+---
+
 # ZED SDK + YOLO 통합 가이드
 
 > ZED 카메라의 스테레오 뎁스를 활용하여 YOLO의 2D 탐지를 3D 공간 인식으로 확장하는 방법.
 > 소스: [Stereolabs 공식 YOLO 문서](https://www.stereolabs.com/docs/yolo/export), `zed-ros2-wrapper/config/custom_object_detection.yaml`
 >
-> 관련 문서: [설치·활용 가이드](zed-ros2-jetson-guide.md) | [API 레퍼런스](zed-ros2-api-reference.md)
+> 설치: plem-init 스킬 `zed-driver-setup.md` 참조 | 카메라 사용법: `zed-usage-guide.md` 참조 | API 레퍼런스: `zed-ros2-api-reference.md` 참조
 
-이 문서는 zed-ros2-wrapper가 빌드·실행 가능한 환경을 전제합니다. 설치는 [메인 가이드](zed-ros2-jetson-guide.md) 참고.
+이 문서는 zed-ros2-wrapper가 빌드·실행 가능한 환경을 전제합니다. 설치는 `zed-driver-setup.md` 참고.
 
 ---
 
