@@ -104,8 +104,8 @@ description: "ZED ROS 2 API reference — complete topic/service/parameter/messa
 | 토픽 | 메시지 타입 | 기본 발행 | 조건 |
 |------|------------|-----------|------|
 | `svo_status` | `zed_msgs/SvoStatus` | - | SVO 모드에서만 |
-| `health_status` | `zed_msgs/HealthStatusStamped` | O | `general.publish_status: true` |
-| `heartbeat` | `zed_msgs/Heartbeat` | O | `general.publish_status: true` |
+| `status/health` | `zed_msgs/HealthStatusStamped` | O | `general.publish_status: true` |
+| `status/heartbeat` | `zed_msgs/Heartbeat` | O | `general.publish_status: true` |
 | `roi_mask/image` | `sensor_msgs/Image` | - | `region_of_interest.publish_roi_mask: true` (기본 false) |
 
 ---
