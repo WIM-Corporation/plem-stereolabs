@@ -67,7 +67,7 @@ region_of_interest:
 
 ```bash
 # ROI 설정
-ros2 service call /zed/zed_node/set_roi zed_interfaces/srv/SetROI \
+ros2 service call /zed/zed_node/set_roi zed_msgs/srv/SetROI \
     "{roi: '[[0.1,0.1],[0.9,0.1],[0.9,0.9],[0.1,0.9]]'}"
 
 # ROI 초기화
