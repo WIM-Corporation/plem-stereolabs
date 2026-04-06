@@ -29,7 +29,7 @@ Key topics:
 | `imu/data` | `sensor_msgs/Imu` | IMU measurements |
 | `odom` | `nav_msgs/Odometry` | Visual-inertial odometry |
 
-All topics are under `/{camera_name}/{node_name}/` namespace (default: `/zed/zed_node/`).
+All topics are under `/{camera_name}/{node_name}/` namespace (default: `/zed/zed_node/`). namespace 명시 시 `/{namespace}/{camera_name}/` (예: `/robot2/cam/`).
 
 ## RViz2 Visualization
 

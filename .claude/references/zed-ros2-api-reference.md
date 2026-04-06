@@ -16,7 +16,7 @@ description: "ZED ROS 2 API reference — complete topic/service/parameter/messa
 ## 1. 토픽
 
 > 소스: `zed_camera_component.cpp`, `zed_camera_component_video_depth.cpp`
-> 토픽 접두사: `/<camera_name>/<node_name>/` (기본: `/zed/zed_node/`)
+> 토픽 접두사: `/<camera_name>/<node_name>/` (기본: `/zed/zed_node/`). namespace 명시 시 `/<namespace>/<camera_name>/` (예: `/robot2/cam/`).
 
 ### 이미지
 
@@ -113,7 +113,7 @@ description: "ZED ROS 2 API reference — complete topic/service/parameter/messa
 ## 2. 서비스
 
 > 소스: `zed_camera_component.hpp` (16개), `zed_camera_one_component.hpp` (5개)
-> 서비스 접두사: `/<camera_name>/<node_name>/`
+> 서비스 접두사: `/<camera_name>/<node_name>/` (기본: `/zed/zed_node/`). namespace 명시 시 `/<namespace>/<camera_name>/`.
 
 ### ZedCamera (스테레오 카메라)
 

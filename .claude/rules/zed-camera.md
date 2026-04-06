@@ -31,9 +31,19 @@ self.create_subscription(Image, topic, cb, qos)
 
 TRANSIENT_LOCAL 사용 시 연결 자체가 안 됨. 반드시 VOLATILE 사용.
 
-## 토픽명 (v5.1+ 네이밍)
+## 토픽명 — launch 분기 로직
 
-접두사: `/<camera_name>/<node_name>/` (기본: `/zed/zed_node/`)
+`zed_camera.launch.py`의 분기에 따라 두 패턴이 결정된다:
+
+```python
+if(namespace_val == ''):
+    namespace_val = camera_name_val      # 패턴 A: camera_name → namespace
+else:
+    node_name_val = camera_name_val      # 패턴 B: camera_name → node_name 대체
+```
+
+**패턴 A** (namespace 미지정): `/<camera_name>/<node_name>/` (기본: `/zed/zed_node/`)
+**패턴 B** (namespace 명시): `/<namespace>/<camera_name>/` (예: `/robot2/cam/`). `zed_node` 사라짐.
 
 | 기능 | 토픽 | 흔한 실수 |
 |------|------|----------|
