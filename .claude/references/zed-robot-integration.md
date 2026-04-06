@@ -25,12 +25,33 @@ ZED `camera_link`는 마운트 포인트 링크의 child로 부착.
 ZED driver에서 **반드시** 비활성화:
 ```yaml
 pos_tracking:
+  pos_tracking_enabled: false   # 로봇 FK가 위치를 제공하므로 VIO 불필요
   publish_tf: false
   publish_map_tf: false
+depth:
+  depth_stabilization: 0        # 이것 없으면 카메라 멈춤 (아래 설명 참조)
+general:
+  publish_urdf: false           # 로봇 RSP와 이중 발행 방지
+```
+
+### `depth_stabilization` 필수 조합
+
+`depth_stabilization`의 기본값은 1이다. 이 값이 0이 아니면 SDK 내부에서 positional tracking을
+활성화하여 `base_link` TF를 기다린다. `publish_tf: false`로 TF 발행을 꺼 놓았으므로
+SDK가 TF를 기다리며 **카메라가 멈춘다** (데이터 발행 중단, 에러 로그 없음).
+
+```bash
+ros2 launch zed_wrapper zed_camera.launch.py camera_model:=zedxm \
+    param_overrides:="pos_tracking.pos_tracking_enabled:=false;pos_tracking.publish_tf:=false;pos_tracking.publish_map_tf:=false;depth.depth_stabilization:=0"
 ```
 
 비활성화 안 하면 ZED가 독립적인 `odom → camera_link` TF를 발행하여
 `base_link → camera_link` 경로와 충돌한다.
+
+> **Eye-on-Hand 독립 테스트 시에도 `publish_tf: false` 권장.**
+> Eye-on-Hand 구성에서 ZED VIO는 불안정하다 — 핸드의 움직임으로 드리프트/NaN TF가
+> 발생하여 rviz OOM 크래시 가능. `publish_tf:=false` + `pos_tracking_enabled:=false`로
+> 설정하고, rviz Fixed Frame을 `zed_left_camera_frame`으로 지정하면 안정적으로 시각화.
 
 ### 모바일 로봇 (참고 — plem 해당 없음)
 
